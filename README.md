@@ -88,7 +88,7 @@ Runly is framework-independent and supports any language or toolchain:
 
 Alternatively, install via terminal:
 ```bash
-code --install-extension runly-dev.runly
+code --install-extension JeswinJohn.runly
 ```
 
 ---
