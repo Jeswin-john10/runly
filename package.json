@@ -14,18 +14,21 @@
     "url": "https://github.com/Jeswin-john10/runly/issues"
   },
   "homepage": "https://github.com/Jeswin-john10/runly",
-  "funding": {
-    "type": "individual",
-    "url": "mailto:support.runly@gmail.com"
+  "pricing": "Free",
+  "galleryBanner": {
+    "color": "#1E1E1E",
+    "theme": "dark"
+  },
+  "sponsor": {
+    "url": "https://github.com/Jeswin-john10/runly"
   },
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
     "Other",
-    "Automation",
     "Testing",
-    "Command Palettes"
+    "Visualization"
   ],
   "keywords": [
     "runly",
