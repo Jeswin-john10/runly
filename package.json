@@ -1,0 +1,271 @@
+{
+  "name": "runly",
+  "displayName": "Runly",
+  "description": "Visual Developer Workflow Automation for VS Code. Build, automate, and run repetitive development tasks with one click.",
+  "version": "0.1.0",
+  "publisher": "runly-dev",
+  "author": "Jeswin John",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jeswin-john10/runly.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jeswin-john10/runly/issues"
+  },
+  "homepage": "https://github.com/Jeswin-john10/runly",
+  "funding": {
+    "type": "individual",
+    "url": "mailto:support.runly@gmail.com"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Automation",
+    "Testing",
+    "Command Palettes"
+  ],
+  "keywords": [
+    "runly",
+    "workflow",
+    "automation",
+    "visual",
+    "tasks",
+    "script",
+    "react",
+    "vite",
+    "terminal"
+  ],
+  "main": "./dist/src/extension.js",
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "onView:runly.sidebarView",
+    "onCommand:runly.open",
+    "onCommand:runly.newWorkflow",
+    "onCommand:runly.runWorkflow",
+    "onCommand:runly.stopWorkflow",
+    "onCommand:runly.manageWorkflows",
+    "onCommand:runly.importWorkflow",
+    "onCommand:runly.exportWorkflow",
+    "onCommand:runly.settings"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "runly.open",
+        "title": "Runly: Open Dashboard & Builder",
+        "icon": "$(play-circle)"
+      },
+      {
+        "command": "runly.newWorkflow",
+        "title": "Runly: New Workflow"
+      },
+      {
+        "command": "runly.runWorkflow",
+        "title": "Runly: Run Workflow"
+      },
+      {
+        "command": "runly.stopWorkflow",
+        "title": "Runly: Stop Active Workflow"
+      },
+      {
+        "command": "runly.manageWorkflows",
+        "title": "Runly: Manage Workflows"
+      },
+      {
+        "command": "runly.importWorkflow",
+        "title": "Runly: Import Workflow (.runly.json)"
+      },
+      {
+        "command": "runly.exportWorkflow",
+        "title": "Runly: Export Workflow"
+      },
+      {
+        "command": "runly.settings",
+        "title": "Runly: Settings"
+      },
+      {
+        "command": "runly.refreshSidebar",
+        "title": "Runly: Refresh Sidebar"
+      },
+      {
+        "command": "runly.openWorkflowItem",
+        "title": "Runly: Open Workflow"
+      },
+      {
+        "command": "runly.runWorkflowItem",
+        "title": "Runly: Run Workflow from Sidebar"
+      },
+      {
+        "command": "runly.deleteWorkflowItem",
+        "title": "Runly: Delete Workflow"
+      },
+      {
+        "command": "runly.duplicateWorkflowItem",
+        "title": "Runly: Duplicate Workflow"
+      },
+      {
+        "command": "runly.exportWorkflowItem",
+        "title": "Runly: Export Workflow Item"
+      },
+      {
+        "command": "runly.useTemplateFromTree",
+        "title": "Runly: Use Template"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "runly.newWorkflow",
+          "group": "navigation",
+          "when": "view == runly.sidebarView"
+        },
+        {
+          "command": "runly.refreshSidebar",
+          "group": "navigation",
+          "when": "view == runly.sidebarView"
+        },
+        {
+          "command": "runly.open",
+          "group": "navigation",
+          "when": "view == runly.sidebarView"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "runly.openWorkflowItem",
+          "group": "inline",
+          "when": "view == runly.sidebarView && viewItem == workflow"
+        },
+        {
+          "command": "runly.runWorkflowItem",
+          "group": "inline",
+          "when": "view == runly.sidebarView && viewItem == workflow"
+        },
+        {
+          "command": "runly.duplicateWorkflowItem",
+          "group": "inline",
+          "when": "view == runly.sidebarView && viewItem == workflow"
+        },
+        {
+          "command": "runly.deleteWorkflowItem",
+          "group": "inline",
+          "when": "view == runly.sidebarView && viewItem == workflow"
+        },
+        {
+          "command": "runly.exportWorkflowItem",
+          "group": "inline",
+          "when": "view == runly.sidebarView && viewItem == workflow"
+        },
+        {
+          "command": "runly.useTemplateFromTree",
+          "group": "inline",
+          "when": "view == runly.sidebarView && viewItem == template"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "runly.open",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r",
+        "when": "editorTextFocus || !editorTextFocus"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "runly-sidebar-view",
+          "title": "Runly Workflows",
+          "icon": "$(play-circle)"
+        }
+      ]
+    },
+    "views": {
+      "runly-sidebar-view": [
+        {
+          "id": "runly.sidebarView",
+          "name": "Workflows"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Runly Settings",
+      "properties": {
+        "runly.defaultShell": {
+          "type": "string",
+          "default": "",
+          "description": "Default shell for executing command nodes (e.g. bash, powershell, zsh). Leave empty to use system default."
+        },
+        "runly.confirmImportedWorkflows": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show security review warning before running imported or untrusted workflows containing executable shell commands."
+        },
+        "runly.showNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Display VS Code desktop notifications upon workflow completion or error."
+        },
+        "runly.executionHistoryLimit": {
+          "type": "number",
+          "default": 50,
+          "description": "Maximum number of execution logs to retain locally."
+        },
+        "runly.autoSaveWorkflows": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically save workflows as you edit them in the visual builder."
+        },
+        "runly.useWorkspaceWorkflows": {
+          "type": "boolean",
+          "default": true,
+          "description": "Store workflows inside `.runly/workflows/` in the workspace folder for Git tracking."
+        },
+        "runly.showTemplateSuggestions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show recommended workflow templates based on auto-detected project frameworks."
+        }
+      }
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": [
+          "*.runly.json",
+          "**/.runly/workflows/*.json"
+        ],
+        "url": "./schemas/workflow.schema.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "compile": "tsc -p ./ && vite build",
+    "watch": "tsc -watch -p ./",
+    "build": "tsc -p ./ && vite build",
+    "lint": "tsc --noEmit",
+    "test": "node --test dist/test/engine.test.js",
+    "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.0.4",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.395.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/vscode": "^1.80.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vscode/vsce": "^2.27.0",
+    "typescript": "^5.5.2",
+    "vite": "^5.3.1"
+  }
+}

@@ -1,0 +1,299 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RunlyWorkflow",
+  "description": "Runly Visual Workflow Automation Definition Schema",
+  "type": "object",
+  "required": ["version", "id", "name", "nodes", "edges"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON schema reference"
+    },
+    "version": {
+      "type": "integer",
+      "description": "Workflow schema version",
+      "default": 1,
+      "minimum": 1
+    },
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the workflow (e.g. react-development)",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable display name of the workflow"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional workflow description"
+    },
+    "category": {
+      "type": "string",
+      "description": "Workflow category"
+    },
+    "framework": {
+      "type": "string",
+      "description": "Target framework or stack (e.g. react, vite, node, python, docker)"
+    },
+    "isFavorite": {
+      "type": "boolean",
+      "description": "Whether this workflow is marked as favorite in the sidebar"
+    },
+    "shortcut": {
+      "type": "string",
+      "description": "Optional keybinding shortcut (e.g. ctrl+alt+1)"
+    },
+    "parameters": {
+      "type": "array",
+      "description": "Runtime user input parameters requested before execution",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Parameter variable name (e.g. PORT)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display label for the parameter prompt"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["string", "number", "boolean", "select"]
+          },
+          "default": {
+            "description": "Default parameter value"
+          },
+          "options": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Selectable options if type is select"
+          },
+          "description": {
+            "type": "string",
+            "description": "Helper hint for parameter input"
+          }
+        }
+      }
+    },
+    "variables": {
+      "type": "object",
+      "description": "Custom workflow variables",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "description": "List of action nodes in the workflow DAG",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "label", "position", "config"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique node identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "start",
+              "command",
+              "terminal",
+              "file",
+              "url",
+              "task",
+              "vscodeCommand",
+              "delay",
+              "notification",
+              "condition",
+              "script"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "description": "Display name of the node"
+          },
+          "position": {
+            "type": "object",
+            "required": ["x", "y"],
+            "properties": {
+              "x": { "type": "number" },
+              "y": { "type": "number" }
+            }
+          },
+          "disabled": {
+            "type": "boolean",
+            "description": "If true, this node will be skipped during execution"
+          },
+          "continueOnError": {
+            "type": "boolean",
+            "description": "If true, workflow continues even if this node fails"
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum execution timeout in milliseconds"
+          },
+          "retry": {
+            "type": "integer",
+            "description": "Number of retry attempts if node fails",
+            "minimum": 0
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional custom node metadata"
+          },
+          "config": {
+            "type": "object",
+            "description": "Node-specific configuration parameters",
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "Shell command to execute"
+              },
+              "workingDirectory": {
+                "type": "string",
+                "description": "Working directory path or ${workspaceFolder}"
+              },
+              "shell": {
+                "type": "string",
+                "description": "Shell executable (bash, zsh, powershell, cmd)"
+              },
+              "env": {
+                "type": "object",
+                "description": "Custom environment variables",
+                "additionalProperties": { "type": "string" }
+              },
+              "onError": {
+                "type": "string",
+                "enum": ["stop", "continue", "fallback"]
+              },
+              "name": {
+                "type": "string",
+                "description": "Terminal tab name"
+              },
+              "reuseTerminal": {
+                "type": "boolean"
+              },
+              "keepOpen": {
+                "type": "boolean"
+              },
+              "action": {
+                "type": "string",
+                "enum": ["open", "reveal", "create", "save"]
+              },
+              "path": {
+                "type": "string",
+                "description": "Target file or folder path"
+              },
+              "content": {
+                "type": "string",
+                "description": "Content for create/save file actions"
+              },
+              "url": {
+                "type": "string",
+                "description": "Browser URL to open"
+              },
+              "taskName": {
+                "type": "string",
+                "description": "VS Code workspace task name"
+              },
+              "commandId": {
+                "type": "string",
+                "description": "VS Code command ID (e.g. workbench.action.files.saveAll)"
+              },
+              "durationMs": {
+                "type": "number",
+                "description": "Delay duration in milliseconds"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["info", "success", "warning", "error"]
+              },
+              "message": {
+                "type": "string",
+                "description": "Notification toast message text"
+              },
+              "conditionType": {
+                "type": "string",
+                "enum": [
+                  "previousSuccess",
+                  "previousFailed",
+                  "exitCode",
+                  "fileExists",
+                  "folderExists",
+                  "envExists",
+                  "os",
+                  "platform"
+                ]
+              },
+              "targetValue": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string",
+                "description": "JavaScript snippet code"
+              }
+            }
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "description": "Connections connecting nodes in the workflow DAG",
+      "items": {
+        "type": "object",
+        "required": ["id", "source", "target"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique edge identifier"
+          },
+          "source": {
+            "type": "string",
+            "description": "Source node ID"
+          },
+          "target": {
+            "type": "string",
+            "description": "Target node ID"
+          },
+          "sourceHandle": {
+            "type": "string",
+            "description": "Source handle name (e.g. true, false, success, fail)"
+          },
+          "targetHandle": {
+            "type": "string",
+            "description": "Target handle name"
+          },
+          "condition": {
+            "type": "string",
+            "description": "Optional edge condition expression"
+          },
+          "label": {
+            "type": "string",
+            "description": "Display label along edge"
+          },
+          "animated": {
+            "type": "boolean",
+            "description": "Animated line styling"
+          }
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "untrustedCommandsWarning": {
+      "type": "boolean",
+      "description": "True if imported from untrusted origin containing executable shell commands"
+    }
+  }
+}

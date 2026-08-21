@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "id": "workflow-1787288750688",
+  "name": "Vite Development",
+  "description": "Launch Vite server & open application in browser.",
+  "category": "Development",
+  "framework": "vite",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "START",
+      "position": {
+        "x": 200,
+        "y": 100
+      },
+      "config": {}
+    },
+    {
+      "id": "dev",
+      "type": "terminal",
+      "label": "npx vite",
+      "position": {
+        "x": 200,
+        "y": 230
+      },
+      "config": {
+        "name": "Vite Server",
+        "command": "npx vite",
+        "workingDirectory": "${workspaceFolder}"
+      }
+    },
+    {
+      "id": "delay",
+      "type": "delay",
+      "label": "Wait 2s",
+      "position": {
+        "x": 200,
+        "y": 360
+      },
+      "config": {
+        "durationMs": 2000
+      }
+    },
+    {
+      "id": "browser",
+      "type": "url",
+      "label": "Open Browser",
+      "position": {
+        "x": 200,
+        "y": 490
+      },
+      "config": {
+        "url": "http://localhost:5173"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "start",
+      "target": "dev"
+    },
+    {
+      "id": "e2",
+      "source": "dev",
+      "target": "delay"
+    },
+    {
+      "id": "e3",
+      "source": "delay",
+      "target": "browser"
+    }
+  ],
+  "createdAt": "2026-08-21T05:05:50.688Z",
+  "updatedAt": "2026-08-21T05:06:36.158Z",
+  "isFavorite": false
+}

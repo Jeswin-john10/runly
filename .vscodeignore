@@ -1,0 +1,10 @@
+.vscode/**
+.github/**
+src/**
+test/**
+node_modules/**
+tsconfig*.json
+vite.config.ts
+*.vsix
+.DS_Store
+Thumbs.db

@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build Output
+dist/
+out/
+coverage/
+.vscode-test/
+
+# Package archives
+*.vsix
+
+# Environment variables
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
